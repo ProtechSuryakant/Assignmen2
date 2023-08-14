@@ -135,35 +135,6 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 Container(
                   height: 50,
-                  width: w,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                  child: TextFormField(
-                    keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
-                        label: const Text('Dog Breed Name'),
-                        labelStyle: TextStyle(color: headline),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(width: 2, color: headline)),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(width: 2, color: headline)),
-                        disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(
-                                width: 2, color: Colors.blueGrey)),
-                        errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide:
-                                const BorderSide(width: 2, color: Colors.red))),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  height: 50,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -220,62 +191,6 @@ class _EditProfileState extends State<EditProfile> {
                           ),
                         ],
                       )
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  height: 50,
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: headline, width: 2)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Dog Gender',
-                        style: TextStyle(fontSize: 16, color: headline),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'M',
-                            style: TextStyle(fontSize: 16, color: headline),
-                          ),
-                          Radio(
-                            value: 'Male',
-                            groupValue: _selectedDogGender,
-                            onChanged: (value) => setState(() {
-                              _selectedDogGender = value!;
-                            }),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 40,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'F',
-                            style: TextStyle(fontSize: 16, color: headline),
-                          ),
-                          Radio(
-                            value: 'Female',
-                            groupValue: _selectedDogGender,
-                            onChanged: (value) => setState(() {
-                              _selectedDogGender = value!;
-                            }),
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
                     ],
                   ),
                 ),

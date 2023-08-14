@@ -81,15 +81,6 @@ class _ProfileState extends State<Profile> {
                               fontSize: 20,
                               fontWeight: FontWeight.w500),
                         ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          'Golden Retriever (Dog Breed)',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
                       ],
                     ),
                     Container(
@@ -238,35 +229,6 @@ class _ProfileState extends State<Profile> {
                 const SizedBox(
                   height: 10,
                 ),
-                Container(
-                  width: w,
-                  alignment: Alignment.centerLeft,
-                  child: const Text('Dog Gender'),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  padding: const EdgeInsets.all(8.0),
-                  width: w,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 5,
-                            spreadRadius: 2,
-                            blurStyle: BlurStyle.outer,
-                            color: Colors.black.withOpacity(0.3),
-                            offset: const Offset(0, 2))
-                      ]),
-                  child: const Text(
-                    overflow: TextOverflow.visible,
-                    'Male Dog',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                )
               ],
             ),
           ),

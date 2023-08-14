@@ -101,9 +101,9 @@ class _HomeState extends State<Home> {
   Widget SimpleDialogBox() {
     return Dialog(
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: SizedBox(
-          height: 400,
+          height: 550,
           width: double.infinity,
           child: Column(
             children: [
