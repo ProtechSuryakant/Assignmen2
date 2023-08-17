@@ -2,6 +2,7 @@ import 'package:assignment2/Constant/Colors.dart';
 import 'package:assignment2/Views/Home/GameList/GameList.dart';
 import 'package:assignment2/Views/Home/Home/Home.dart';
 import 'package:assignment2/Views/Home/Profile/Profile.dart';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
