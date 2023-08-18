@@ -1,7 +1,8 @@
+import 'dart:convert';
+
 import 'package:assignment2/Data/GameSteps.dart';
-import 'package:assignment2/Views/Home/GameList/GameList.dart';
+import 'package:assignment2/Data/dummyData.dart';
 import 'package:assignment2/Views/Home/Home/GamePage.dart';
-import 'package:assignment2/Views/Widgets/DogsCard.dart';
 import 'package:assignment2/Views/Widgets/DogsList.dart';
 import 'package:assignment2/Views/Widgets/OurUser.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,7 @@ class _HomeState extends State<Home> {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: h * 0.23, child: DogsList()),
+            Container(color: Colors.white, height: h * 0.35, child: DogsList()),
             Container(
               padding: const EdgeInsets.only(left: 20),
               alignment: Alignment.centerLeft,

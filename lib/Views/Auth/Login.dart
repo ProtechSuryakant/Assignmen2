@@ -1,4 +1,5 @@
 import 'package:assignment2/Constant/Colors.dart';
+import 'package:assignment2/Controllers/login_controller.dart';
 import 'package:assignment2/Views/Auth/SignUp.dart';
 import 'package:assignment2/Views/Auth/forgetPass.dart';
 import 'package:assignment2/Views/Home/MainHome.dart';
@@ -17,6 +18,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   bool _isObscure = true;
+
+  LoginController loginController = LoginController();
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +64,7 @@ class _LoginState extends State<Login> {
                       margin:
                           const EdgeInsets.only(top: 20, left: 20, right: 20),
                       child: TextFormField(
+                        controller: loginController.emailController,
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value!.isEmpty || !value.contains("@")) {
@@ -110,18 +114,15 @@ class _LoginState extends State<Login> {
                       height: 50,
                       margin: const EdgeInsets.only(left: 20, right: 20),
                       child: TextFormField(
-                        // controller: _passwordController,
+                        controller: loginController.passwordController,
                         obscureText: _isObscure,
                         maxLength: 8,
-
                         validator: (value) {
                           if (value!.isEmpty || value.length == 8) {
                             return 'Please enter your password';
                           }
-
                           return null;
                         },
-
                         style: const TextStyle(
                           color: Color(0xFF5C6098),
                         ),
@@ -199,10 +200,7 @@ class _LoginState extends State<Login> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MainHome()));
+                        loginController.loginWithEmail();
                       },
                       child: Container(
                         margin: const EdgeInsets.only(left: 20, right: 20),

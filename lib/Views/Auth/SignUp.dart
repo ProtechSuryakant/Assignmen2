@@ -1,8 +1,10 @@
 import 'package:assignment2/Constant/Colors.dart';
+import 'package:assignment2/Controllers/registration_controller.dart';
 import 'package:assignment2/Views/Auth/Login.dart';
 import 'package:assignment2/Views/Auth/OTPSignUp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -14,6 +16,9 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   bool _isObscure = true;
+
+  RegistrationController registrationController =
+      Get.put(RegistrationController());
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +103,7 @@ class _SignUpState extends State<SignUp> {
                       margin:
                           const EdgeInsets.only(top: 20, left: 20, right: 20),
                       child: TextFormField(
-                        keyboardType: TextInputType.emailAddress,
+                        controller: registrationController.fullNameController,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter your full name';
@@ -137,6 +142,7 @@ class _SignUpState extends State<SignUp> {
                       margin:
                           const EdgeInsets.only(top: 20, left: 20, right: 20),
                       child: TextFormField(
+                        controller: registrationController.emailController,
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value!.isEmpty || value.contains('@')) {
@@ -178,10 +184,9 @@ class _SignUpState extends State<SignUp> {
                       height: 50,
                       margin: const EdgeInsets.only(left: 20, right: 20),
                       child: TextFormField(
-                        // controller: _passwordController,
+                        controller: registrationController.passwordController,
                         obscureText: _isObscure,
                         maxLength: 8,
-
                         validator: (value) {
                           if (value!.isEmpty || value.length == 8) {
                             return 'Please enter your password';
@@ -189,7 +194,6 @@ class _SignUpState extends State<SignUp> {
 
                           return null;
                         },
-
                         style: const TextStyle(color: Color(0xFF5C6098)),
                         decoration: InputDecoration(
                           counterText: '',
@@ -242,10 +246,10 @@ class _SignUpState extends State<SignUp> {
                       height: 50,
                       margin: const EdgeInsets.only(left: 20, right: 20),
                       child: TextFormField(
-                        // controller: _passwordController,
+                        controller:
+                            registrationController.confirmPasswordController,
                         obscureText: _isObscure,
                         maxLength: 8,
-
                         validator: (value) {
                           if (value!.isEmpty || value.length == 8) {
                             return 'Please enter Confirm password';
@@ -253,7 +257,6 @@ class _SignUpState extends State<SignUp> {
 
                           return null;
                         },
-
                         style: const TextStyle(color: Color(0xFF5C6098)),
                         decoration: InputDecoration(
                           counterText: '',
@@ -302,10 +305,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const OTPSignUp()));
+                        registrationController.registerWithEmail();
                       },
                       child: Container(
                         margin: const EdgeInsets.only(left: 20, right: 20),
