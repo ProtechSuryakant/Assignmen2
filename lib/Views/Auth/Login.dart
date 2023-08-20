@@ -2,11 +2,12 @@ import 'package:assignment2/Constant/Colors.dart';
 import 'package:assignment2/Controllers/login_controller.dart';
 import 'package:assignment2/Views/Auth/SignUp.dart';
 import 'package:assignment2/Views/Auth/forgetPass.dart';
-import 'package:assignment2/Views/Home/MainHome.dart';
 import 'package:assignment2/Views/Widgets/LoginTop.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -19,7 +20,7 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   bool _isObscure = true;
 
-  LoginController loginController = LoginController();
+  LoginController loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +201,9 @@ class _LoginState extends State<Login> {
                     ),
                     InkWell(
                       onTap: () {
-                        loginController.loginWithEmail();
+                        setState(() {
+                          loginController.loginWithEmail();
+                        });
                       },
                       child: Container(
                         margin: const EdgeInsets.only(left: 20, right: 20),
@@ -290,10 +293,7 @@ class _LoginState extends State<Login> {
                         ),
                         TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const SignUp()));
+                              Get.to(const SignUp());
                             },
                             child: const Text(
                               'Sign Up',

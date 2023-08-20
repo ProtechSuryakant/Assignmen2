@@ -39,15 +39,14 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Assignment 2',
-          theme: ThemeData(
-            primarySwatch: customSwatch,
-            primaryColor: customSwatch,
-            scaffoldBackgroundColor: const Color(0xFFEEEDFF),
-          ),
-          home: const Splash(),
-        );
+            debugShowCheckedModeBanner: false,
+            title: 'Assignment 2',
+            theme: ThemeData(
+              primarySwatch: customSwatch,
+              primaryColor: customSwatch,
+              scaffoldBackgroundColor: const Color(0xFFEEEDFF),
+            ),
+            home: const Splash());
       },
     );
   }

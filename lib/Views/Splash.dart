@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:assignment2/Constant/Colors.dart';
 import 'package:assignment2/Views/Auth/Login.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 class Splash extends StatefulWidget {
@@ -17,8 +18,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Login()));
+      Get.off(const Login());
     });
   }
 
