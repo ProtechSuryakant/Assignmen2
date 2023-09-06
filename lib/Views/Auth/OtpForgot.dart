@@ -1,660 +1,234 @@
-import 'package:assignment2/Constant/Colors.dart';
+import 'package:assignment2/Controllers/forgot_otp_controller.dart';
+import 'package:assignment2/Views/Auth/newPassword.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:otp_text_field/otp_text_field.dart';
+import 'package:otp_text_field/style.dart';
 
 class OtpForgot extends StatefulWidget {
-  const OtpForgot({super.key});
-
   @override
   State<OtpForgot> createState() => _OtpForgotState();
 }
 
 class _OtpForgotState extends State<OtpForgot> {
-  bool _isObscure = true;
+  FocusNode firstDigitFocusNode = FocusNode();
+  FocusNode secondDigitFocusNode = FocusNode();
+  FocusNode thirdDigitFocusNode = FocusNode();
+  FocusNode fourthDigitFocusNode = FocusNode();
+  FocusNode fifthDigitFocusNode = FocusNode();
+  FocusNode sixthDigitFocusNode = FocusNode();
+
+  final TextEditingController _otpController1 = TextEditingController();
+  final TextEditingController _otpController2 = TextEditingController();
+  final TextEditingController _otpController3 = TextEditingController();
+  final TextEditingController _otpController4 = TextEditingController();
+  final TextEditingController _otpController5 = TextEditingController();
+  final TextEditingController _otpController6 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: ListView(
-        children: [
+        backgroundColor: const Color(0xFFFFF6E6),
+        body: Column(children: [
           Container(
-              margin: const EdgeInsets.only(left: 10),
-              alignment: Alignment.centerLeft,
-              child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.arrow_back,
-                    size: 27,
-                    color: secondaryColor,
-                  ))),
-          CircleAvatar(
-            radius: 100,
-            child: ClipOval(
-                child: Image.asset(
-              'assets/images/dogs_forgot_otp.jpg',
-              height: 300,
-              width: 200,
-              fit: BoxFit.cover,
-            )),
-          ),
-          Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width,
-              child: Text(
-                'OTP',
-                style: TextStyle(
-                    color: secondaryColor,
-                    fontSize: 25.w,
-                    fontWeight: FontWeight.bold),
-              )),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            height: h * 0.63,
+            height: h * .3,
             decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    topRight: Radius.circular(50))),
-            child: Column(
+                image: DecorationImage(
+                    image: AssetImage("assets/images/dogs_forgot_otp.jpg"),
+                    fit: BoxFit.cover)),
+            child: Stack(
               children: [
-                Container(
-                  height: 20,
-                  margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
-                  child: const Text(
-                    'OTP Verification',
-                    style: TextStyle(
-                        color: Color(0xFF293265),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
+                Positioned(
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.3),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.transparent,
+                            Colors.black,
+                            Colors.black,
+                          ],
+                        ),
+                      ),
+                    )),
+                Positioned(
+                  left: 10,
+                  top: 20,
+                  child: IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      )),
                 ),
-                Container(
-                  height: 50,
-                  margin: const EdgeInsets.only(top: 20, left: 20, right: 20),
-                  child: const Text(
-                    'We have sent the code verification to Your Mobile Number',
-                    textAlign: TextAlign.center,
+                Positioned(
+                  bottom: 5,
+                  left: 90,
+                  child: Text(
+                    'Verify Your Email',
                     style: TextStyle(
-                      color: Color(0xFF293265),
-                      fontSize: 16,
-                    ),
+                        color: Colors.yellow[500],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28),
                   ),
-                ),
-                Form(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SizedBox(
-                          height: 68,
-                          width: 50,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            style: const TextStyle(
-                                fontSize: 25, color: Color(0xFF293265)),
-                            onChanged: (value) {
-                              if (value.length == 1) {
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            decoration: InputDecoration(
-                                hintStyle:
-                                    const TextStyle(color: Color(0xFF293265)),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Color(0xFF293265))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Color(0xFF293265))),
-                                errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Colors.red))),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 68,
-                          width: 50,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            style: const TextStyle(
-                                fontSize: 25, color: Color(0xFF293265)),
-                            onChanged: (value) {
-                              if (value.length == 1) {
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            decoration: InputDecoration(
-                                hintStyle:
-                                    const TextStyle(color: Color(0xFF293265)),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Color(0xFF293265))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Color(0xFF293265))),
-                                errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Colors.red))),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 68,
-                          width: 50,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            style: const TextStyle(
-                                fontSize: 25, color: Color(0xFF293265)),
-                            onChanged: (value) {
-                              if (value.length == 1) {
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            decoration: InputDecoration(
-                                hintStyle:
-                                    const TextStyle(color: Color(0xFF293265)),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Color(0xFF293265))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Color(0xFF293265))),
-                                errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Colors.red))),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 68,
-                          width: 50,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            style: const TextStyle(
-                                fontSize: 25, color: Color(0xFF293265)),
-                            onChanged: (value) {
-                              if (value.length == 1) {
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            decoration: InputDecoration(
-                                hintStyle:
-                                    const TextStyle(color: Color(0xFF293265)),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Color(0xFF293265))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Color(0xFF293265))),
-                                errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Colors.red))),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 68,
-                          width: 50,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            style: const TextStyle(
-                                fontSize: 25, color: Color(0xFF293265)),
-                            onChanged: (value) {
-                              if (value.length == 1) {
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            decoration: InputDecoration(
-                                hintStyle:
-                                    const TextStyle(color: Color(0xFF293265)),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Color(0xFF293265))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Color(0xFF293265))),
-                                errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Colors.red))),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 68,
-                          width: 50,
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(1),
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            style: const TextStyle(
-                                fontSize: 25, color: Color(0xFF293265)),
-                            onChanged: (value) {
-                              if (value.length == 1) {
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },
-                            decoration: InputDecoration(
-                                hintStyle:
-                                    const TextStyle(color: Color(0xFF293265)),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Color(0xFF293265))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Color(0xFF293265))),
-                                errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        width: 2, color: Colors.red))),
-                          ),
-                        )
-                      ],
-                    ),
+                )
+              ],
+            ),
+          ),
+          Container(
+            // height: h * .3,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                    blurRadius: 10,
+                    spreadRadius: 5,
+                    color: Colors.grey.withOpacity(.3),
+                    offset: const Offset(0, 3)),
+              ],
+            ),
+            padding: EdgeInsets.symmetric(vertical: 20),
+            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const Text(
+                  textAlign: TextAlign.center,
+                  'We have sent the code verification to Your registered email',
+                  style: TextStyle(
+                    // color: Color(0xFF293265),
+                    fontSize: 18,
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                InkWell(
-                  onTap: () {
-                    showModalBottomSheet(
-                        context: context,
-                        backgroundColor: Colors.transparent,
-                        isDismissible: false,
-                        isScrollControlled: false,
-                        enableDrag: false,
-                        builder: (context) => buildSheet());
-                  },
-                  focusColor: const Color(0xFF293265),
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 20, right: 20),
-                    height: 50,
-                    width: 400,
-                    decoration: BoxDecoration(
-                        color: const Color(0xFF293265),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: const Center(
-                        child: Text(
-                      'Verify',
-                      style: TextStyle(color: Colors.white, fontSize: 18),
-                    )),
+                Container(
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      buildOTPTextField(_otpController1),
+                      buildOTPTextField(_otpController2),
+                      buildOTPTextField(_otpController3),
+                      buildOTPTextField(_otpController4),
+                      buildOTPTextField(_otpController5),
+                      buildOTPTextField(_otpController6),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    onTap: () {
+                      if (_otpController1.text.isEmpty ||
+                          _otpController2.text.isEmpty ||
+                          _otpController3.text.isEmpty ||
+                          _otpController4.text.isEmpty ||
+                          _otpController5.text.isEmpty ||
+                          _otpController6.text.isEmpty) {
+                        AwesomeDialog(
+                                context: context,
+                                dialogType: DialogType.info,
+                                animType: AnimType.topSlide,
+                                // showCloseIcon: true,
+                                title: "Info",
+                                titleTextStyle: const TextStyle(
+                                    color: Color(0xFF293265),
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold),
+                                desc: "Please enter valid otp.",
+                                descTextStyle: const TextStyle(fontSize: 18),
+                                btnOkOnPress: () {
+                                  Get.obs();
+                                },
+                                btnOkColor: Colors.pink)
+                            .show();
+                      } else {
+                        Get.to(const PasswordChange());
+                      }
+                    },
+                    child: Container(
+                      height: 50,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12.0),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xFFff99be),
+                            Color(0xFFff83a9),
+                            Color(0xFFff6d92),
+                            Color(0xFFff5478),
+                            Color(0xFFff385c),
+                          ],
+                        ),
+                      ),
+                      child: const Text(
+                        "Verify",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-        ],
+        ]));
+  }
+
+  Widget buildOTPTextField(TextEditingController controller) {
+    return Container(
+      width: 50.0,
+      child: TextFormField(
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 18, color: Color(0xFF293265)),
+        controller: controller,
+        keyboardType: TextInputType.number,
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        maxLength: 1,
+        decoration: const InputDecoration(
+            counterText: "",
+            border: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFF293265))),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFF293265))),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFF293265)))),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Please enter a digit';
+          }
+          return null;
+        },
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            FocusScope.of(context).nextFocus();
+          } else {
+            FocusScope.of(context).previousFocus();
+          }
+        },
       ),
     );
   }
-
-  // Widget buildSheet() => Container(
-  //       height: MediaQuery.of(context).size.height * 0.4,
-  //       decoration: const BoxDecoration(
-  //         color: Colors.white,
-  //         borderRadius: BorderRadius.only(
-  //             topLeft: Radius.circular(50), topRight: Radius.circular(50)),
-  //       ),
-  //       child: Column(
-  //         children: [
-  //           SizedBox(
-  //             height: 50,
-  //             child: TextFormField(
-  //               // controller: _passwordController,
-  //               obscureText: _isObscure,
-  //               maxLength: 8,
-
-  //               validator: (value) {
-  //                 if (value!.isEmpty || value.length == 8) {
-  //                   return 'Please enter your new password';
-  //                 }
-
-  //                 return null;
-  //               },
-
-  //               style: const TextStyle(color: Color(0xFF5C6098)),
-  //               decoration: InputDecoration(
-  //                 counterText: '',
-  //                 label: const Text('New Password'),
-  //                 labelStyle: const TextStyle(color: Color(0xFF5C6098)),
-  //                 enabledBorder: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.circular(20),
-  //                     borderSide:
-  //                         const BorderSide(width: 2, color: Color(0xFF5C6098))),
-  //                 disabledBorder: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.circular(20),
-  //                     borderSide:
-  //                         const BorderSide(width: 2, color: Colors.grey)),
-  //                 focusedBorder: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.circular(20),
-  //                     borderSide:
-  //                         const BorderSide(width: 2, color: Color(0xFF5C6098))),
-  //                 errorBorder: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.circular(20),
-  //                     borderSide:
-  //                         const BorderSide(width: 2, color: Colors.red)),
-  //                 prefixIcon: const Icon(
-  //                   Icons.key,
-  //                   color: Color(0xFF5C6098),
-  //                 ),
-  //                 suffixIcon: IconButton(
-  //                   color: const Color(0xFF5C6098),
-  //                   icon: _isObscure
-  //                       ? const Icon(
-  //                           Icons.visibility,
-  //                           color: Color(0xFF5C6098),
-  //                         )
-  //                       : const Icon(
-  //                           Icons.visibility_off,
-  //                           color: Color(0xFF5C6098),
-  //                         ),
-  //                   onPressed: () {
-  //                     setState(() {
-  //                       _isObscure = !_isObscure;
-  //                     });
-  //                   },
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //           const SizedBox(
-  //             height: 20,
-  //           ),
-  //           SizedBox(
-  //             height: 50,
-  //             child: TextFormField(
-  //               // controller: _passwordController,
-  //               obscureText: _isObscure,
-  //               maxLength: 8,
-
-  //               validator: (value) {
-  //                 if (value!.isEmpty || value.length == 8) {
-  //                   return 'Please enter Confirm password';
-  //                 }
-
-  //                 return null;
-  //               },
-
-  //               style: const TextStyle(color: Color(0xFF5C6098)),
-  //               decoration: InputDecoration(
-  //                 counterText: '',
-  //                 label: const Text('Re-Password'),
-  //                 labelStyle: const TextStyle(color: Color(0xFF5C6098)),
-  //                 enabledBorder: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.circular(20),
-  //                     borderSide:
-  //                         const BorderSide(width: 2, color: Color(0xFF5C6098))),
-  //                 disabledBorder: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.circular(20),
-  //                     borderSide:
-  //                         const BorderSide(width: 2, color: Colors.grey)),
-  //                 focusedBorder: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.circular(20),
-  //                     borderSide:
-  //                         const BorderSide(width: 2, color: Color(0xFF5C6098))),
-  //                 errorBorder: OutlineInputBorder(
-  //                     borderRadius: BorderRadius.circular(20),
-  //                     borderSide:
-  //                         const BorderSide(width: 2, color: Colors.red)),
-  //                 prefixIcon: const Icon(
-  //                   Icons.key,
-  //                   color: Color(0xFF5C6098),
-  //                 ),
-  //                 suffixIcon: IconButton(
-  //                   color: const Color(0xFF5C6098),
-  //                   icon: _isObscure
-  //                       ? const Icon(
-  //                           Icons.visibility,
-  //                           color: Color(0xFF5C6098),
-  //                         )
-  //                       : const Icon(Icons.visibility_off,
-  //                           color: Color(0xFF5C6098)),
-  //                   onPressed: () {
-  //                     setState(() {
-  //                       _isObscure = !_isObscure;
-  //                     });
-  //                   },
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //           Container(
-  //             alignment: Alignment.centerRight,
-  //             child: TextButton(
-  //                 onPressed: () {},
-  //                 child: const Text(
-  //                   'Change Password',
-  //                   style: TextStyle(fontSize: 16, color: Color(0xFF393265)),
-  //                 )),
-  //           )
-  //         ],
-  //       ),
-  //     );
-
-  Widget buildSheet() => Container(
-        height: MediaQuery.of(context).size.height * 0.5,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(50), topRight: Radius.circular(50)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              'Change Password',
-              style: TextStyle(
-                  color: Color(0xFF293265),
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              margin: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-              child: const Text(
-                'We have sent the code verification to your email',
-                style: TextStyle(fontSize: 18, color: Color(0xFF293265)),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              height: 50,
-              margin: const EdgeInsets.only(left: 20, right: 20),
-              child: TextFormField(
-                // controller: _passwordController,
-                obscureText: _isObscure,
-                maxLength: 8,
-
-                validator: (value) {
-                  if (value!.isEmpty || value.length == 8) {
-                    return 'Please enter your password';
-                  }
-
-                  return null;
-                },
-
-                style: const TextStyle(color: Color(0xFF5C6098)),
-                decoration: InputDecoration(
-                  counterText: '',
-                  label: const Text('Password'),
-                  labelStyle: const TextStyle(color: Color(0xFF5C6098)),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide:
-                          const BorderSide(width: 2, color: Color(0xFF5C6098))),
-                  disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide:
-                          const BorderSide(width: 2, color: Colors.grey)),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide:
-                          const BorderSide(width: 2, color: Color(0xFF5C6098))),
-                  errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide:
-                          const BorderSide(width: 2, color: Colors.red)),
-                  prefixIcon: const Icon(
-                    Icons.key,
-                    color: Color(0xFF5C6098),
-                  ),
-                  suffixIcon: IconButton(
-                    color: const Color(0xFF5C6098),
-                    icon: _isObscure
-                        ? const Icon(
-                            Icons.visibility,
-                            color: Color(0xFF5C6098),
-                          )
-                        : const Icon(
-                            Icons.visibility_off,
-                            color: Color(0xFF5C6098),
-                          ),
-                    onPressed: () {
-                      setState(() {
-                        _isObscure = !_isObscure;
-                      });
-                    },
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              height: 50,
-              margin: const EdgeInsets.only(left: 20, right: 20),
-              child: TextFormField(
-                // controller: _passwordController,
-                obscureText: _isObscure,
-                maxLength: 8,
-
-                validator: (value) {
-                  if (value!.isEmpty || value.length == 8) {
-                    return 'Please enter Confirm password';
-                  }
-
-                  return null;
-                },
-
-                style: const TextStyle(color: Color(0xFF5C6098)),
-                decoration: InputDecoration(
-                  counterText: '',
-                  label: const Text('Confirm Password'),
-                  labelStyle: const TextStyle(color: Color(0xFF5C6098)),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide:
-                          const BorderSide(width: 2, color: Color(0xFF5C6098))),
-                  disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide:
-                          const BorderSide(width: 2, color: Colors.grey)),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide:
-                          const BorderSide(width: 2, color: Color(0xFF5C6098))),
-                  errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide:
-                          const BorderSide(width: 2, color: Colors.red)),
-                  prefixIcon: const Icon(
-                    Icons.key,
-                    color: Color(0xFF5C6098),
-                  ),
-                  suffixIcon: IconButton(
-                    color: const Color(0xFF5C6098),
-                    icon: _isObscure
-                        ? const Icon(
-                            Icons.visibility,
-                            color: Color(0xFF5C6098),
-                          )
-                        : const Icon(Icons.visibility_off,
-                            color: Color(0xFF5C6098)),
-                    onPressed: () {
-                      setState(() {
-                        _isObscure = !_isObscure;
-                      });
-                    },
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              focusColor: const Color(0xFF293265),
-              child: Container(
-                margin: const EdgeInsets.only(left: 20, right: 20),
-                height: 50,
-                width: 400,
-                decoration: BoxDecoration(
-                    color: const Color(0xFF293265),
-                    borderRadius: BorderRadius.circular(20)),
-                child: const Center(
-                    child: Text(
-                  'Change Password',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                )),
-              ),
-            ),
-          ],
-        ),
-      );
 }

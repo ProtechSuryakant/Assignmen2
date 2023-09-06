@@ -66,7 +66,7 @@ class RegistrationController extends GetxController {
         var headers = {"Content-type": 'application/json'};
         var url = Uri.parse(APIs.baseUrl + APIs.authEndPoints.register);
         Map body = {
-          "name": fullNameController.text,
+          "fullName": fullNameController.text,
           "email": emailController.text,
           "password": passwordController.text
         };
@@ -76,22 +76,18 @@ class RegistrationController extends GetxController {
 
         if (response.statusCode == 200) {
           final json = jsonDecode(response.body);
-          if (json['code'] == 0) {
-            var token = json['data']['Token'];
-            print("Token Body:  $token");
-            final SharedPreferences? pref = await _pref;
+          if (json["success"] == true) {
             fullNameController.clear();
-            emailController.clear();
+            // emailController.clear();
             passwordController.clear();
             confirmPasswordController.clear();
-            Get.off(const OTPSignUp());
+            print(emailController.text);
           } else {
             throw jsonDecode(response.body)["message"] ??
                 "Unknown Error Occurred";
           }
         } else {
-          throw jsonDecode(response.body)["message"] ??
-              "Unknown Error Occurred";
+          Get.defaultDialog(title: 'Error', middleText: 'User Already Exists.');
         }
       }
     } catch (e) {

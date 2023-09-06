@@ -1,7 +1,9 @@
+import 'package:assignment2/Data/Dogs2.dart';
 import 'package:flutter/material.dart';
-import 'package:assignment2/Constant/Colors.dart';
 import 'package:assignment2/Data/Dogs.dart';
 import 'package:assignment2/Views/Widgets/TinderCard.dart';
+import 'package:flutter_swiper_view/flutter_swiper_view.dart';
+import 'package:get/get.dart';
 import 'package:swipeable_card_stack/swipeable_card_stack.dart';
 
 class GamePage extends StatefulWidget {
@@ -12,180 +14,291 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-  int currentDogIndex = 0;
-  List<Dogs> currentDogs = [];
+  List<Dogs2> currentDogs = [];
 
-  void onCardSwap(Direction direction, int newIndex, TinderCard card) {
-    setState(() {
-      currentDogIndex = newIndex + 2;
-      currentDogs = dogsData.sublist(currentDogIndex, currentDogIndex + 2);
-    });
-  }
+  List<Color> cardColors = [
+    Colors.green,
+    Colors.red,
+    Colors.grey,
+    Colors.blue,
+    Colors.orange,
+    Colors.pink,
+    Colors.purple,
+  ];
 
-  @override
-  void initState() {
-    super.initState();
-    currentDogs = dogsData.sublist(0, 2);
-  }
+  final SwipeableCardSectionController _evenCardController =
+      SwipeableCardSectionController();
+  final SwipeableCardSectionController _oddCardController =
+      SwipeableCardSectionController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Column(children: [
-          Expanded(
-            flex: 6,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius:
-                    BorderRadius.only(bottomRight: Radius.circular(50)),
-              ),
-              child: Column(
+        backgroundColor: const Color(0xFFFFF6E6),
+        body: SafeArea(
+          top: true,
+          child: Column(children: [
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              width: MediaQuery.of(context).size.width,
+              child: Row(
                 children: [
-                  Container(
-                    alignment: Alignment.center,
-                    height: 60,
-                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                      BoxShadow(
-                          blurRadius: 10,
-                          spreadRadius: 2,
-                          color: Colors.grey.withOpacity(0.5),
-                          offset: const Offset(0, 2))
-                    ]),
-                    child: const Text(
-                      'Playing',
-                      style: TextStyle(
-                        fontSize: 25,
+                  IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.arrow_back,
+                          color: Color(0xFFff385c))),
+                  const Spacer(),
+                  const Text(
+                    "Find Soulmate",
+                    style: TextStyle(
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF293265),
-                      ),
-                    ),
+                        color: Color(0xFFff385c)),
                   ),
-                  const SizedBox(height: 20),
-                  Container(
-                    alignment: Alignment.center,
-                    height: 25,
-                    child: const Text(
-                      'Select One Of These Two Dog',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    width: 350,
-                    height: 250,
-                    child: Row(
-                      children: [
-                        SwipeableCardsSection(
-                          onCardSwiped: (direction, newIndex, card) =>
-                              onCardSwap(direction, newIndex, card),
-                          context: context,
-                          items: currentDogs
-                              .sublist(currentDogIndex, currentDogIndex + 1)
-                              .map((dog) => TinderCard(
-                                    color: Colors.transparent,
-                                    image: dog.image,
-                                  ))
-                              .toList(),
-                        ),
-                        const SizedBox(width: 20),
-                        SwipeableCardsSection(
-                          onCardSwiped: (direction, newIndex, card) =>
-                              onCardSwap(direction, newIndex, card),
-                          context: context,
-                          items: currentDogs
-                              .sublist(currentDogIndex + 1, currentDogIndex + 2)
-                              .map((dog) => TinderCard(
-                                    color: Colors.transparent,
-                                    image: dog.image,
-                                  ))
-                              .toList(),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    color: Colors.white,
-                    margin: const EdgeInsets.only(top: 10),
-                    alignment: Alignment.center,
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Container(
-                              alignment: Alignment.center,
-                              width: 150,
-                              child: Text(
-                                dogsData[currentDogIndex].title,
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.visible,
-                                style: TextStyle(
-                                  color: secondaryColor,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              width: 150,
-                              child: Text(
-                                dogsData[currentDogIndex + 1].title,
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.visible,
-                                style: TextStyle(
-                                  color: secondaryColor,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Container(
-                              alignment: Alignment.center,
-                              width: 150,
-                              child: Text(
-                                dogsData[currentDogIndex].desc,
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.visible,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              width: 150,
-                              child: Text(
-                                dogsData[currentDogIndex + 1].desc,
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.visible,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                  const Spacer()
                 ],
               ),
             ),
-          )
-        ]));
+            Container(
+                height: 220,
+                margin:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                alignment: Alignment.bottomCenter,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: const DecorationImage(
+                        image: AssetImage("assets/images/game1.jpg"),
+                        fit: BoxFit.cover)),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.transparent,
+                            Colors.transparent,
+                            Colors.black,
+                            Colors.black
+                          ])),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Row(
+                          children: [
+                            Text(
+                              "Name : ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "Labrador",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            )
+                          ],
+                        ),
+                        const Row(
+                          children: [
+                            Text(
+                              "Breed : ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "Labrador Retriever",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const Text(
+                              "Height : ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            const Text(
+                              "2 ft",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                            const Spacer(),
+                            TextButton(
+                                onPressed: () {
+                                  Get.defaultDialog(
+                                    title: "My Dogs Details",
+                                    titleStyle: const TextStyle(
+                                        color: Color(0xFFff385c)),
+                                    middleText: "",
+                                    middleTextStyle: TextStyle(fontSize: 1),
+                                    actions: [
+                                      Container(
+                                        margin: const EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                        ),
+                                        child: const Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "Name : ",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  "Labrador",
+                                                  style:
+                                                      TextStyle(fontSize: 16),
+                                                )
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "Breed : ",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  "Labrador Retriever",
+                                                  style:
+                                                      TextStyle(fontSize: 16),
+                                                )
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "Height : ",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  "2 ft",
+                                                  style:
+                                                      TextStyle(fontSize: 16),
+                                                )
+                                              ],
+                                            ),
+                                            Row(children: [
+                                              Text(
+                                                "Hobby : ",
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                "Playing Ball",
+                                                style: TextStyle(fontSize: 16),
+                                              )
+                                            ]),
+                                            Row(children: [
+                                              Text(
+                                                "Age : ",
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                "5 year",
+                                                style: TextStyle(fontSize: 16),
+                                              )
+                                            ]),
+                                            Row(children: [
+                                              Text(
+                                                "Food Choices : ",
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                "corn",
+                                                style: TextStyle(fontSize: 16),
+                                              )
+                                            ]),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                },
+                                child: const Text(
+                                  "More >>",
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                ))
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )),
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              height: 200,
+              child: SwipeableCardsSection(
+                onCardSwiped: (direction, newIndex, card) {},
+                context: context,
+                items: dogsData2
+                    .map((dog) => TinderCard(
+                          color: dog.color,
+                          image: dog.image,
+                          title: dog.title,
+                        ))
+                    .toList(),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InkWell(
+                  onTap: () {},
+                  child: const Icon(
+                    Icons.favorite_outline,
+                    color: Colors.red,
+                    size: 100,
+                  ),
+                ),
+                InkWell(
+                  onTap: () {},
+                  child: const Icon(
+                    Icons.favorite_outline,
+                    color: Colors.red,
+                    size: 100,
+                  ),
+                )
+              ],
+            )
+          ]),
+        ));
   }
 }
