@@ -1,8 +1,7 @@
 import 'package:assignment2/Data/Dogs2.dart';
 import 'package:flutter/material.dart';
-import 'package:assignment2/Data/Dogs.dart';
 import 'package:assignment2/Views/Widgets/TinderCard.dart';
-import 'package:flutter_swiper_view/flutter_swiper_view.dart';
+
 import 'package:get/get.dart';
 import 'package:swipeable_card_stack/swipeable_card_stack.dart';
 
@@ -13,31 +12,47 @@ class GamePage extends StatefulWidget {
   State<GamePage> createState() => _GamePageState();
 }
 
-class _GamePageState extends State<GamePage> {
+class _GamePageState extends State<GamePage> with TickerProviderStateMixin {
   List<Dogs2> currentDogs = [];
 
-  List<Color> cardColors = [
-    Colors.green,
-    Colors.red,
-    Colors.grey,
-    Colors.blue,
-    Colors.orange,
-    Colors.pink,
-    Colors.purple,
-  ];
+  double _height = 300.0;
+  double _width = 300.0;
 
-  final SwipeableCardSectionController _evenCardController =
-      SwipeableCardSectionController();
-  final SwipeableCardSectionController _oddCardController =
-      SwipeableCardSectionController();
+  var stack = 4.obs;
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> cards = [
+      AnimatedContainer(
+          duration: const Duration(seconds: 1),
+          height: _height,
+          width: _width,
+          color: Colors.amber),
+      AnimatedContainer(
+        duration: const Duration(seconds: 1),
+        height: _height,
+        width: _width,
+        color: Colors.blue,
+      ),
+      AnimatedContainer(
+        duration: const Duration(seconds: 1),
+        height: _height,
+        width: _width,
+        color: Colors.green,
+      ),
+      AnimatedContainer(
+        duration: const Duration(seconds: 1),
+        height: _height,
+        width: _width,
+        color: Colors.red,
+      ),
+    ];
+
     return Scaffold(
         backgroundColor: const Color(0xFFFFF6E6),
         body: SafeArea(
           top: true,
-          child: Column(children: [
+          child: ListView(children: [
             Container(
               margin: const EdgeInsets.only(top: 10),
               width: MediaQuery.of(context).size.width,
@@ -260,44 +275,53 @@ class _GamePageState extends State<GamePage> {
             const SizedBox(
               height: 20,
             ),
-            SizedBox(
-              height: 200,
-              child: SwipeableCardsSection(
-                onCardSwiped: (direction, newIndex, card) {},
-                context: context,
-                items: dogsData2
-                    .map((dog) => TinderCard(
-                          color: dog.color,
-                          image: dog.image,
-                          title: dog.title,
-                        ))
-                    .toList(),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 50),
+              // height: 400,
+              child: Stack(
+                children: cards,
               ),
+            ),
+            Container(
+              height: 50,
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(20)),
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _height = 200;
+                    });
+                  },
+                  child: const Text(
+                    'Move',
+                    style: TextStyle(fontSize: 18),
+                  )),
             ),
             const SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InkWell(
-                  onTap: () {},
-                  child: const Icon(
-                    Icons.favorite_outline,
-                    color: Colors.red,
-                    size: 100,
-                  ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: const Icon(
-                    Icons.favorite_outline,
-                    color: Colors.red,
-                    size: 100,
-                  ),
-                )
-              ],
-            )
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //     InkWell(
+            //       onTap: () {},
+            //       child: const Icon(
+            //         Icons.favorite_outline,
+            //         color: Colors.red,
+            //         size: 100,
+            //       ),
+            //     ),
+            //     InkWell(
+            //       onTap: () {},
+            //       child: const Icon(
+            //         Icons.favorite_outline,
+            //         color: Colors.red,
+            //         size: 100,
+            //       ),
+            //     )
+            //   ],
+            // )
           ]),
         ));
   }

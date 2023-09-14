@@ -1,14 +1,14 @@
-import 'package:assignment2/Controllers/forgot_otp_controller.dart';
+import 'package:assignment2/Controllers/signup_otp_controller.dart';
 import 'package:assignment2/Views/Auth/Login.dart';
-import 'package:assignment2/Views/Auth/newPassword.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:otp_text_field/otp_text_field.dart';
-import 'package:otp_text_field/style.dart';
 
 class OTPSignUp extends StatefulWidget {
+  String email;
+
+  OTPSignUp({super.key, required this.email});
   @override
   State<OTPSignUp> createState() => _OTPSignUpState();
 }
@@ -27,6 +27,8 @@ class _OTPSignUpState extends State<OTPSignUp> {
   final TextEditingController _otpController4 = TextEditingController();
   final TextEditingController _otpController5 = TextEditingController();
   final TextEditingController _otpController6 = TextEditingController();
+
+  otpSignUpController SignUpOtp = Get.put(otpSignUpController());
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +164,15 @@ class _OTPSignUpState extends State<OTPSignUp> {
                                 btnOkColor: Colors.pink)
                             .show();
                       } else {
-                        Get.off(const Login());
+                        SignUpOtp.verifyWithOTP(
+                            widget.email,
+                            _otpController1.text,
+                            _otpController2.text,
+                            _otpController3.text,
+                            _otpController4.text,
+                            _otpController5.text,
+                            _otpController6.text,
+                            context);
                       }
                     },
                     child: Container(

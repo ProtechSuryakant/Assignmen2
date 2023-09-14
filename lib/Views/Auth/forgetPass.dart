@@ -1,17 +1,7 @@
-import 'package:assignment2/Constant/Colors.dart';
-import 'package:assignment2/Controllers/login_controller.dart';
-import 'package:assignment2/Controllers/signup_otp_controller.dart';
-import 'package:assignment2/Views/Auth/OtpForgot.dart';
-import 'package:assignment2/Views/Auth/SignUp.dart';
-import 'package:assignment2/Views/Home/MainHome.dart';
+import 'package:assignment2/Controllers/forgot_controller.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:otp_text_field/otp_text_field.dart';
-import 'package:otp_text_field/style.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({
@@ -24,12 +14,9 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   final TextEditingController _emailController = TextEditingController();
-  FocusNode _emailFocusNode = FocusNode();
-  @override
-  void dispose() {
-    _emailController.dispose();
-    super.dispose();
-  }
+  final FocusNode _emailFocusNode = FocusNode();
+
+  ForgotPassController forgotPassController = Get.put(ForgotPassController());
 
   @override
   Widget build(BuildContext context) {
@@ -212,9 +199,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 btnOkColor: Colors.pink)
                             .show();
                       } else {
-                        Get.to(OtpForgot());
-                        _emailController.clear();
-                        _emailFocusNode.unfocus();
+                        forgotPassController.forgotWithEmail(
+                            _emailController.text.trim(), context);
                       }
                     },
                     child: Container(

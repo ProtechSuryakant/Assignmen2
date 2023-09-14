@@ -1,10 +1,7 @@
-import 'package:assignment2/Constant/Colors.dart';
 import 'package:assignment2/Controllers/registration_controller.dart';
 import 'package:assignment2/Views/Auth/Login.dart';
-import 'package:assignment2/Views/Auth/OTPSignUp.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class SignUp extends StatefulWidget {
@@ -220,7 +217,6 @@ class _SignUpState extends State<SignUp> {
                                     if (value!.isEmpty || value.length == 8) {
                                       return 'Please enter Confirm password';
                                     }
-
                                     return null;
                                   },
                                   style:
@@ -384,7 +380,9 @@ class _SignUpState extends State<SignUp> {
                                               btnOkColor: Colors.pink)
                                           .show();
                                     } else {
-                                      Get.to(OTPSignUp());
+                                      registrationController.registerWithEmail(
+                                          _emailController.text,
+                                          _passController.text);
                                     }
                                   },
                                   child: Container(

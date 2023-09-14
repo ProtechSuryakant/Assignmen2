@@ -4,10 +4,11 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:otp_text_field/otp_text_field.dart';
-import 'package:otp_text_field/style.dart';
 
 class OtpForgot extends StatefulWidget {
+  String email;
+  OtpForgot({required this.email});
+
   @override
   State<OtpForgot> createState() => _OtpForgotState();
 }
@@ -26,6 +27,8 @@ class _OtpForgotState extends State<OtpForgot> {
   final TextEditingController _otpController4 = TextEditingController();
   final TextEditingController _otpController5 = TextEditingController();
   final TextEditingController _otpController6 = TextEditingController();
+
+  otpForgotController forgotController = Get.put(otpForgotController());
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +164,15 @@ class _OtpForgotState extends State<OtpForgot> {
                                 btnOkColor: Colors.pink)
                             .show();
                       } else {
-                        Get.to(const PasswordChange());
+                        forgotController.forgotWithOTP(
+                            widget.email,
+                            _otpController1.text,
+                            _otpController2.text,
+                            _otpController3.text,
+                            _otpController4.text,
+                            _otpController5.text,
+                            _otpController6.text,
+                            context);
                       }
                     },
                     child: Container(

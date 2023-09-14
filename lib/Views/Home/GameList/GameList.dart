@@ -29,7 +29,7 @@ class _GameListState extends State<GameList> {
           backgroundColor: Colors.transparent,
           centerTitle: true,
           title: const Text(
-            'Founds',
+            'Game Played',
             style: TextStyle(
                 color: Color(0xFFff385c),
                 fontSize: 22,

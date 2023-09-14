@@ -129,6 +129,13 @@ class _HomeState extends State<Home> {
           const SizedBox(
             height: 10,
           ),
+          Container(
+            margin: const EdgeInsets.only(left: 10),
+            child: const Text(
+              'Last recently matched',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+          ),
           DodLoveCard(),
           const SizedBox(
             height: 10,
@@ -167,7 +174,7 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
-              child: const Text('Find Here',
+              child: const Text('Lets Start',
                   style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
@@ -231,7 +238,7 @@ class _HomeState extends State<Home> {
               ),
               InkWell(
                 onTap: () {
-                  Get.off(GamePage());
+                  Get.off(const GamePage());
                 },
                 child: Container(
                   margin:

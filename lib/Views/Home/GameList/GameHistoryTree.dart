@@ -122,7 +122,8 @@ class _GameHistoryTreeState extends State<GameHistoryTree> {
           height: 70,
           margin: const EdgeInsets.all(5),
           decoration: BoxDecoration(
-            border: Border.all(width: 1),
+            color: Colors.white,
+            border: Border.all(width: 1, color: Colors.deepPurple),
             borderRadius: BorderRadius.circular(15),
             image: DecorationImage(image: AssetImage(images[branchIndex])),
           ),

@@ -356,10 +356,11 @@ class _LoginState extends State<Login> {
                                         btnOkColor: Colors.pink)
                                     .show();
                               } else {
-                                Get.to(const MainHome());
+                                loginController.loginWithEmail(
+                                    _userController.text,
+                                    _passController.text,
+                                    context);
                               }
-
-                              // Get.to(const MainHome());
                             },
                             child: Container(
                               height: 50,

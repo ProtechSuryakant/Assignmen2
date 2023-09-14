@@ -213,58 +213,55 @@ class _ProfileState extends State<Profile> {
                       ),
                     )),
                 Container(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        const Text('Gender'),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Radio<Gender>(
-                          value: Gender.male,
-                          groupValue: _selectedGender,
-                          onChanged: (Gender? value) {
-                            setState(() {
-                              _selectedGender = value;
-                            });
-                          },
-                        ),
-                        const Text('Male'),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Radio<Gender>(
-                          value: Gender.female,
-                          groupValue: _selectedGender,
-                          onChanged: (Gender? value) {
-                            setState(() {
-                              _selectedGender = value;
-                            });
-                          },
-                        ),
-                        const Text('Female'),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Radio<Gender>(
-                          value: Gender.other,
-                          groupValue: _selectedGender,
-                          onChanged: (Gender? value) {
-                            setState(() {
-                              _selectedGender = value;
-                            });
-                          },
-                        ),
-                        const Text('Other'),
-                      ],
-                    ),
-                  ],
-                )),
+                  padding: const EdgeInsets.only(left: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Row(
+                        children: [
+                          Text(
+                            'Gender',
+                            style: TextStyle(color: Color(0xFF293265)),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<Gender>(
+                            value: Gender.male,
+                            groupValue: _selectedGender,
+                            onChanged: (Gender? value) {
+                              setState(() {
+                                _selectedGender = value;
+                              });
+                            },
+                          ),
+                          const Text(
+                            'Male',
+                            style: TextStyle(color: Color(0xFF293265)),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio<Gender>(
+                            value: Gender.female,
+                            groupValue: _selectedGender,
+                            onChanged: (Gender? value) {
+                              setState(() {
+                                _selectedGender = value;
+                              });
+                            },
+                          ),
+                          const Text(
+                            'Female',
+                            style: TextStyle(color: Color(0xFF293265)),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
                 const Divider(
                   thickness: 3,
                 ),
